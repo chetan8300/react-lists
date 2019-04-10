@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from './App.module.css';
-import Person from './Person/Person';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
 
@@ -61,13 +62,7 @@ class App extends Component {
     render() {
 
         const style = {
-            backgroundColor: 'green',
-            color: 'white',
-            font: 'inherit',
-            border: '1px solid',
-            padding: '8px',
-            cursor: 'pointer',
-            outline: 'none',
+            
             ':hover': {
                 backgroundColor: 'lightgreen',
                 color: 'black'
@@ -79,43 +74,25 @@ class App extends Component {
         if (this.state.showPersons) {
             persons = (
                 <div>
-                    {this.state.persons.map((person, index) => {
-                        return (
-                            <Person
-                                key={person.id}
-                                click={() => this.deletePersonHandler(index)}
-                                name={person.name}
-                                age={person.age}
-                                changed={(event) => this.nameChangeHandler(event, person.id)}
-                            />
-                        );
-                    })}
+                    <Persons
+                        persons={this.state.persons}
+                        clicked={this.deletePersonHandler}
+                        changed={this.nameChangeHandler}
+                    />
                 </div>
             );
 
             style.backgroundColor = 'red';
         }
 
-        const classes = [];
-        if(this.state.persons.length <= 2) {
-            classes.push(styles.red);
-        }
-        if (this.state.persons.length <= 1) {
-            classes.push(styles.bold);
-        }
-
         return (
             <div className={styles.App}>
-                <h1>Persons</h1>
-                <p className={classes.join(' ')}>
-                    This is working!!
-                </p>
-                <button
+                <Cockpit
                     style={style}
-                    onClick={this.togglePersonsHandler}
-                >
-                    {this.state.showPersons ? 'ON' : 'OFF'}
-                </button>
+                    persons={this.state.persons}
+                    togglePersonsHandler={this.togglePersonsHandler}
+                    showPersons={this.state.showPersons}
+                />
                 {persons}
             </div>
         );
