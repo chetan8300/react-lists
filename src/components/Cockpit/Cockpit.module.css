@@ -23,6 +23,7 @@
 
 .Cockpit button.Red {
   background-color: red;
+  color: white;
 }
 
 .Cockpit button.Red:hover {
